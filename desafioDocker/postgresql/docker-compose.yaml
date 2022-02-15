@@ -1,0 +1,34 @@
+version: '3.8'
+
+volumes:
+  postegresql_vol:
+
+networks:
+   my-netservivces:
+      driver: bridge
+
+services:
+
+  postgresql:
+    image: postgres:9.6.24
+    ports:
+    - 5432:5432
+    networks:
+      my-netservivces 
+    volumes:
+    - postegresql_vol:/data/db
+    restart: always
+    environment:
+      POSTGRES_USER: postuser
+      POSTGRES_PASSWORD: xpto123
+
+  pgadmin:
+    image: dpage/pgadmin4:6.5
+    ports:
+    - 8081:8081
+    networks:
+      my-netservivces
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "priscilaalv@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: xpto123
+      PGADMIN_LISTEN_PORT: 8081
