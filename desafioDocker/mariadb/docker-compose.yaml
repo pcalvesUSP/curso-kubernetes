@@ -22,4 +22,17 @@ services:
       MARIADB_USER: mariadbuser 
       MARIADB_PASSWORD: mariadbpwd
       MARIADB_ROOT_PASSWORD: xpto123
+
+  phpmyadmin_mariadb:
+    image: phpmyadmin:latest
+    ports:
+    - 8083:80
+    networks:
+    - my-netservivces
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: xpto123
+      MYSQL_USER: mariadbuser
+      MYSQL_PASSWORD: mariadbpwd
+      PMA_HOST: mariadb
     
