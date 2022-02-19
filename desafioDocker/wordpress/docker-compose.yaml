@@ -1,0 +1,53 @@
+version: '3.8'
+
+volumes:
+  mariadb_vol:
+
+networks:
+   my-netservivces:
+      driver: bridge
+
+services:
+
+  mariadb:
+    image: mariadb:10.7.1
+    ports:
+    - 3306:3306
+    networks:
+    - my-netservivces 
+    volumes:
+    - mariadb_vol:/data/db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: xpto123
+      MARIADB_USER: mariadbuser 
+      MARIADB_PASSWORD: mariadbpwd
+      MARIADB_DATABASE: wpdocker
+
+  phpmyadmin_mariadb:
+    image: phpmyadmin:latest
+    ports:
+    - 8081:80
+    networks:
+    - my-netservivces
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: xpto123
+      MYSQL_USER: mariadbuser
+      MYSQL_PASSWORD: mariadbpwd
+      PMA_HOST: mariadb
+
+  wordpress:
+    image: wordpress
+    ports:
+    - 8080:80
+    networks:
+    - my-netservivces
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: mariadbuser
+      WORDPRESS_DB_PASSWORD: mariadbpwd
+      WORDPRESS_DB_NAME: wpdocker
+      WORDPRESS_TABLE_PREFIX: WP
+      
