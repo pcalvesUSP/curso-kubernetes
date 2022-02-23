@@ -8,7 +8,6 @@ networks:
       driver: bridge
 
 services:
- 
   redis:
     image: redis:7.0-rc1
     ports:
@@ -19,7 +18,6 @@ services:
     - redis_vol:/data/db
     restart: always
     
-
   rediscommander:
     image: rediscommander/redis-commander:latest
     ports:
